@@ -1,0 +1,304 @@
+/* ─── Fonts ────────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap');
+
+/* ─── CSS Variables ─────────────────────────────────────────────────────────
+   These are the design tokens for the whole app.
+   Change a value here and it updates everywhere.
+──────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Colors */
+  --red:        #C0392B;
+  --red-dark:   #96281B;
+  --red-light:  #E74C3C;
+  --cream:      #FDF6E3;
+  --cream-dark: #F5E6C8;
+  --brown:      #6B3A2A;
+  --brown-light:#A0522D;
+  --green:      #27AE60;
+  --black:      #1A1A1A;
+  --white:      #FFFFFF;
+  --gray:       #888;
+  --gray-light: #DDD;
+
+  /* Typography */
+  --font-display: 'Abril Fatface', serif;   /* Headlines, logo */
+  --font-body:    'Lora', serif;            /* Body copy, descriptions */
+  --font-ui:      'DM Sans', sans-serif;    /* Buttons, labels, nav */
+
+  /* Spacing */
+  --gap-xs:  4px;
+  --gap-sm:  8px;
+  --gap-md:  16px;
+  --gap-lg:  24px;
+  --gap-xl:  40px;
+  --gap-2xl: 64px;
+
+  /* Layout */
+  --max-width: 1200px;
+  --radius:    8px;
+  --radius-lg: 16px;
+
+  /* Shadows */
+  --shadow-sm: 2px 2px 0px var(--brown);
+  --shadow-md: 4px 4px 0px var(--brown);
+  --shadow-lg: 6px 6px 0px var(--brown);
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-ui);
+  background-color: var(--cream);
+  color: var(--black);
+  min-height: 100vh;
+
+  /* Subtle checkered background — the retro signature */
+  background-image:
+    linear-gradient(45deg, var(--cream-dark) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--cream-dark) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--cream-dark) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--cream-dark) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* ─── Typography ────────────────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--red-dark);
+  line-height: 1.1;
+}
+
+h4, h5, h6 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+}
+
+p {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--brown);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ─── Layout Helpers ────────────────────────────────────────────────────── */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gap-lg);
+}
+
+.page {
+  padding: var(--gap-xl) var(--gap-lg);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-sm);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 10px 20px;
+  border: 2px solid var(--black);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+
+.btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red-dark);
+}
+
+.btn-primary:hover {
+  background: var(--red-dark);
+}
+
+.btn-secondary {
+  background: var(--cream);
+  color: var(--black);
+  border-color: var(--brown);
+}
+
+.btn-secondary:hover {
+  background: var(--cream-dark);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--red);
+  border-color: var(--red);
+  box-shadow: none;
+}
+
+.btn-ghost:hover {
+  background: var(--red);
+  color: var(--white);
+  box-shadow: none;
+}
+
+.btn-lg {
+  font-size: 1.1rem;
+  padding: 14px 28px;
+}
+
+.btn-sm {
+  font-size: 0.85rem;
+  padding: 6px 14px;
+}
+
+/* ─── Cards ─────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border: 2px solid var(--black);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+/* ─── Form Elements ─────────────────────────────────────────────────────── */
+input, select, textarea {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  padding: 10px 14px;
+  border: 2px solid var(--brown-light);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--black);
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+label {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--brown);
+  display: block;
+  margin-bottom: var(--gap-xs);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  margin-bottom: var(--gap-md);
+}
+
+/* ─── Badges ────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+}
+
+.badge-red   { color: var(--red);   background: #fdecea; }
+.badge-green { color: var(--green); background: #eafaf1; }
+.badge-brown { color: var(--brown); background: var(--cream-dark); }
+
+/* ─── Divider ───────────────────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 2px dashed var(--cream-dark);
+  margin: var(--gap-lg) 0;
+}
+
+/* ─── Loading Spinner ───────────────────────────────────────────────────── */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--cream-dark);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: var(--gap-xl) auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Error / Empty States ──────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: var(--gap-2xl) var(--gap-lg);
+  color: var(--gray);
+}
+
+.empty-state h3 {
+  color: var(--gray);
+  font-size: 1.5rem;
+  margin-bottom: var(--gap-sm);
+}
+
+.error-msg {
+  background: #fdecea;
+  color: var(--red-dark);
+  border: 1.5px solid var(--red-light);
+  border-radius: var(--radius);
+  padding: var(--gap-sm) var(--gap-md);
+  font-size: 0.9rem;
+  margin-bottom: var(--gap-md);
+}
+
+/* ─── Retro Section Banner ──────────────────────────────────────────────── */
+.section-banner {
+  text-align: center;
+  padding: var(--gap-lg) 0;
+  position: relative;
+}
+
+.section-banner h2 {
+  font-size: 2.5rem;
+  display: inline-block;
+  padding: 0 var(--gap-lg);
+  position: relative;
+}
+
+.section-banner h2::before,
+.section-banner h2::after {
+  content: '✦';
+  color: var(--red);
+  margin: 0 var(--gap-sm);
+}

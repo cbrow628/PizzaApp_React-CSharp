@@ -1,13 +1,12 @@
 namespace PizzaApi.Models;
 
-public class Pizza
+public class Topping
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
+    public ToppingCategory Category { get; set; }
     public decimal Price { get; set; }
-    public string Size { get; set; } = string.Empty;
     public bool IsAvailable { get; set; } = true;
 
-    public List<Topping> Toppings { get; set; } = [];
+    public List<Pizza> Pizzas { get; set; } = [];
 }

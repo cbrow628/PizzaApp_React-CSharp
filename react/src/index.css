@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* ─── Fonts ────────────────────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap');
 
@@ -45,10 +47,12 @@
 }
 
 /* ─── Reset ─────────────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 /* ─── Base ───────────────────────────────────────────────────────────────── */
@@ -176,7 +180,7 @@ a {
 
 .btn-sm {
   font-size: 0.85rem;
-  padding: 6px 14px;
+  padding: 6px 6px;
 }
 
 /* ─── Cards ─────────────────────────────────────────────────────────────── */
@@ -189,7 +193,7 @@ a {
 }
 
 /* ─── Form Elements ─────────────────────────────────────────────────────── */
-input, select, textarea {
+input:not([type="radio"]):not([type="checkbox"]), select, textarea {
   font-family: var(--font-ui);
   font-size: 1rem;
   padding: 10px 14px;

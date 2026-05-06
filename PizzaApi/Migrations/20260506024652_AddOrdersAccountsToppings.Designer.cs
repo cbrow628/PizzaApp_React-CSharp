@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaApi.Data;
 
@@ -11,9 +12,11 @@ using PizzaApi.Data;
 namespace PizzaApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260506024652_AddOrdersAccountsToppings")]
+    partial class AddOrdersAccountsToppings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,216 +188,6 @@ namespace PizzaApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Toppings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Category = 0,
-                            IsAvailable = true,
-                            Name = "Tomato",
-                            Price = 0.00m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Category = 0,
-                            IsAvailable = true,
-                            Name = "BBQ",
-                            Price = 0.00m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Category = 0,
-                            IsAvailable = true,
-                            Name = "Alfredo",
-                            Price = 0.00m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Category = 0,
-                            IsAvailable = true,
-                            Name = "Buffalo",
-                            Price = 0.00m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Category = 0,
-                            IsAvailable = true,
-                            Name = "Garlic Butter",
-                            Price = 0.00m
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Category = 0,
-                            IsAvailable = true,
-                            Name = "Pesto",
-                            Price = 0.00m
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Category = 1,
-                            IsAvailable = true,
-                            Name = "Mozzarella",
-                            Price = 0.75m
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Category = 1,
-                            IsAvailable = true,
-                            Name = "Parmesan",
-                            Price = 0.75m
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Category = 1,
-                            IsAvailable = true,
-                            Name = "Feta",
-                            Price = 0.75m
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Category = 1,
-                            IsAvailable = true,
-                            Name = "Cheddar",
-                            Price = 0.75m
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Category = 1,
-                            IsAvailable = true,
-                            Name = "Ricotta",
-                            Price = 0.75m
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Category = 2,
-                            IsAvailable = true,
-                            Name = "Pepperoni",
-                            Price = 1.00m
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Category = 2,
-                            IsAvailable = true,
-                            Name = "Italian Sausage",
-                            Price = 1.00m
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Category = 2,
-                            IsAvailable = true,
-                            Name = "Bacon",
-                            Price = 1.00m
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Category = 2,
-                            IsAvailable = true,
-                            Name = "Canadian Bacon",
-                            Price = 1.00m
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Category = 2,
-                            IsAvailable = true,
-                            Name = "Ham",
-                            Price = 1.00m
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Category = 2,
-                            IsAvailable = true,
-                            Name = "Chicken",
-                            Price = 1.00m
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Category = 3,
-                            IsAvailable = true,
-                            Name = "Mushrooms",
-                            Price = 0.50m
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Category = 3,
-                            IsAvailable = true,
-                            Name = "Bell Peppers",
-                            Price = 0.50m
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Category = 3,
-                            IsAvailable = true,
-                            Name = "Red Onions",
-                            Price = 0.50m
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Category = 3,
-                            IsAvailable = true,
-                            Name = "Black Olives",
-                            Price = 0.50m
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Category = 3,
-                            IsAvailable = true,
-                            Name = "Jalapeños",
-                            Price = 0.50m
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Category = 4,
-                            IsAvailable = true,
-                            Name = "Hot Sauce",
-                            Price = 0.50m
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Category = 4,
-                            IsAvailable = true,
-                            Name = "Honey",
-                            Price = 0.50m
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Category = 4,
-                            IsAvailable = true,
-                            Name = "Hot Honey",
-                            Price = 0.50m
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Category = 4,
-                            IsAvailable = true,
-                            Name = "Balsamic",
-                            Price = 0.50m
-                        });
                 });
 
             modelBuilder.Entity("PizzaToppings", b =>

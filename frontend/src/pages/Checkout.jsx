@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
 import { placeOrder } from '../services/api'
 
 export default function Checkout() {
   const { items, total, clearCart } = useCart()
+  const { user } = useAuth()
   const navigate = useNavigate()
 
   const [form, setForm] = useState({ name: '', phone: '', email: '', address: '' })
@@ -33,13 +35,11 @@ export default function Checkout() {
     })
 
     try {
-      const order = await placeOrder({
-        guestName:    form.name,
-        guestPhone:   form.phone,
-        guestEmail:   form.email || null,
-        guestAddress: form.address,
-        items:        orderItems,
-      })
+      const payload = user
+        ? { accountId: user.id, items: orderItems }
+        : { guestName: form.name, guestPhone: form.phone, guestEmail: form.email || null, guestAddress: form.address, items: orderItems }
+
+      const order = await placeOrder(payload)
       clearCart()
       navigate(`/order/${order.id}`)
     } catch (err) {
@@ -107,38 +107,83 @@ export default function Checkout() {
           </div>
         </div>
 
-        {/* Guest info form */}
-        <form onSubmit={handleSubmit} className="card p-6 flex flex-col gap-4">
-          <h3 className="text-xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--red-dark)' }}>
-            Your Details
-          </h3>
+        {/* Delivery details — account info or guest form */}
+        {user ? (
+          <form onSubmit={handleSubmit} className="card p-6 flex flex-col gap-4">
+            <h3 className="text-xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--red-dark)' }}>
+              Delivering To
+            </h3>
 
-          {error && <p className="error-msg">{error}</p>}
+            {error && <p className="error-msg">{error}</p>}
 
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input id="name" name="name" required value={form.name} onChange={handleChange} placeholder="John Smith" />
-          </div>
+            <div className="flex flex-col gap-3 text-sm" style={{ color: 'var(--brown)' }}>
+              <div>
+                <p className="text-xs uppercase tracking-widest mb-0.5" style={{ color: 'var(--gray)' }}>Name</p>
+                <p className="font-medium" style={{ color: 'var(--black)' }}>{user.name}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-widest mb-0.5" style={{ color: 'var(--gray)' }}>Phone</p>
+                <p className="font-medium" style={{ color: 'var(--black)' }}>{user.phone}</p>
+              </div>
+              {user.email && (
+                <div>
+                  <p className="text-xs uppercase tracking-widest mb-0.5" style={{ color: 'var(--gray)' }}>Email</p>
+                  <p className="font-medium" style={{ color: 'var(--black)' }}>{user.email}</p>
+                </div>
+              )}
+              <div>
+                <p className="text-xs uppercase tracking-widest mb-0.5" style={{ color: 'var(--gray)' }}>Address</p>
+                <p className="font-medium" style={{ color: 'var(--black)' }}>{user.address}</p>
+              </div>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" required value={form.phone} onChange={handleChange} placeholder="(555) 555-5555" />
-          </div>
+            <p className="text-xs mt-1" style={{ color: 'var(--gray)' }}>
+              Need to change your details?{' '}
+              <Link to="/account" style={{ color: 'var(--red)' }}>Update your account</Link>
+            </p>
 
-          <div className="form-group">
-            <label htmlFor="email">Email <span style={{ color: 'var(--gray)', fontWeight: 400 }}>(optional)</span></label>
-            <input id="email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="you@example.com" />
-          </div>
+            <button type="submit" className="btn btn-primary btn-lg mt-2" disabled={submitting}>
+              {submitting ? 'Placing Order…' : 'Place Order'}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleSubmit} className="card p-6 flex flex-col gap-4">
+            <h3 className="text-xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--red-dark)' }}>
+              Your Details
+            </h3>
 
-          <div className="form-group">
-            <label htmlFor="address">Delivery Address</label>
-            <input id="address" name="address" required value={form.address} onChange={handleChange} placeholder="123 Main St, City, State" />
-          </div>
+            {error && <p className="error-msg">{error}</p>}
 
-          <button type="submit" className="btn btn-primary btn-lg mt-2" disabled={submitting}>
-            {submitting ? 'Placing Order…' : 'Place Order'}
-          </button>
-        </form>
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input id="name" name="name" required value={form.name} onChange={handleChange} placeholder="John Smith" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" required value={form.phone} onChange={handleChange} placeholder="(555) 555-5555" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">Email <span style={{ color: 'var(--gray)', fontWeight: 400 }}>(optional)</span></label>
+              <input id="email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="you@example.com" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="address">Delivery Address</label>
+              <input id="address" name="address" required value={form.address} onChange={handleChange} placeholder="123 Main St, City, State" />
+            </div>
+
+            <p className="text-xs" style={{ color: 'var(--gray)' }}>
+              Have an account?{' '}
+              <Link to="/login" style={{ color: 'var(--red)' }}>Sign in</Link> to save your order history.
+            </p>
+
+            <button type="submit" className="btn btn-primary btn-lg mt-2" disabled={submitting}>
+              {submitting ? 'Placing Order…' : 'Place Order'}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   )

@@ -47,7 +47,7 @@ function ToppingSelector({ selected, onToggle, onSelect, priceMap = {} }) {
                     {isRadio ? (
                       <input
                         type="radio"
-                        name="sauce"
+                        name={group.toLowerCase()}
                         className="accent-red-700 w-1/3"
                         checked={checked}
                         onChange={() => onSelect(name, group)}
@@ -76,11 +76,20 @@ function ToppingSelector({ selected, onToggle, onSelect, priceMap = {} }) {
 
 // ─── Customize Modal ──────────────────────────────────────────────────────────
 function CustomizeModal({ pizza, onClose, onAdd }) {
-  const [selected, setSelected] = useState([])
+  const [selected, setSelected] = useState([pizza.currentSize ?? 'Small'])
 
   function toggle(name) {
     setSelected(prev => prev.includes(name) ? prev.filter(n => n !== name) : [...prev, name])
   }
+
+  const selectedSize = selected.find(s => STATIC_TOPPINGS.Size.includes(s)) ?? 'Small'
+  const toppingCost  = selected
+    .filter(n => !STATIC_TOPPINGS.Size.includes(n))
+    .reduce((sum, name) => {
+      const group = Object.entries(STATIC_TOPPINGS).find(([, ts]) => ts.includes(name))?.[0]
+      return sum + (TOPPING_OFFSETS[group] ?? 0)
+    }, 0)
+  const totalPrice = pizza.price + SIZE_OFFSETS[selectedSize] + toppingCost
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -119,12 +128,13 @@ function CustomizeModal({ pizza, onClose, onAdd }) {
              style={{ borderColor: 'var(--gray-light)' }}>
           <span className="text-xl font-bold"
                 style={{ fontFamily: 'var(--font-display)', color: 'var(--red-dark)' }}>
-            ${pizza.price.toFixed(2)}
+            ${totalPrice.toFixed(2)}
           </span>
           <button
             className="btn btn-primary"
             onClick={() => {
-              onAdd(pizza, selected)
+              const otherToppings = selected.filter(n => !STATIC_TOPPINGS.Size.includes(n))
+              onAdd({ ...pizza, price: totalPrice, size: selectedSize }, otherToppings)
               onClose()
             }}
           >
@@ -205,7 +215,7 @@ function PizzaCard({ pizza, onAdd, onCustomize }) {
           <button
             className="btn btn-secondary btn-sm"
             style={{ boxShadow: 'none' }}
-            onClick={() => onCustomize(pizzaWithSize)}
+            onClick={() => onCustomize({ ...pizza, currentSize: size })}
           >
             Customize
           </button>
@@ -222,11 +232,12 @@ export default function Menu() {
   const { data: pizzas, loading, error } = useFetch('/pizza')
 
   const [customizing, setCustomizing] = useState(null)
-  const [cyoSelected, setCyoSelected]  = useState([])
+  const [cyoSelected, setCyoSelected]  = useState(['Small'])
 
   const availablePizzas = (pizzas ?? []).filter(p => p.isAvailable)
 
   const cyoToppingPrice = cyoSelected.reduce((sum, name) => {
+    if (STATIC_TOPPINGS.Size.includes(name)) return sum + (SIZE_OFFSETS[name] ?? 0)
     const group = Object.entries(STATIC_TOPPINGS).find(([, ts]) => ts.includes(name))?.[0]
     return sum + (TOPPING_OFFSETS[group] ?? 0)
   }, 0)

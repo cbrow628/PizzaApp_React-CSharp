@@ -8,6 +8,7 @@ import OrderStatus from './pages/OrderStatus'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Story from './pages/Story'
+import Account from './pages/Account'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/order/:id"   element={<OrderStatus />} />
             <Route path="/login"       element={<Login />} />
             <Route path="/register"    element={<Register />} />
+            <Route path="/account"     element={<Account />} />
             <Route path="*"            element={<Navigate to="/" replace />} />
           </Routes>
         </CartProvider>

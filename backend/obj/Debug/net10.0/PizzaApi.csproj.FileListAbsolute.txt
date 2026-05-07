@@ -308,3 +308,4 @@ C:\Users\John\Documents\PizzaAppRC\backend\obj\Debug\net10.0\refint\PizzaApi.dll
 C:\Users\John\Documents\PizzaAppRC\backend\obj\Debug\net10.0\PizzaApi.pdb
 C:\Users\John\Documents\PizzaAppRC\backend\obj\Debug\net10.0\PizzaApi.genruntimeconfig.cache
 C:\Users\John\Documents\PizzaAppRC\backend\obj\Debug\net10.0\ref\PizzaApi.dll
+C:\Users\John\Documents\PizzaAppRC\backend\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

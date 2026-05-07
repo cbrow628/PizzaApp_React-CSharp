@@ -1,0 +1,13 @@
+# .NET build output
+backend/bin/
+backend/obj/
+
+# .NET secrets and local overrides
+backend/appsettings.Development.json
+backend/appsettings.Local.json
+backend/**/*.user
+
+# Frontend secrets
+frontend/.env
+frontend/.env.*
+!frontend/.env.example

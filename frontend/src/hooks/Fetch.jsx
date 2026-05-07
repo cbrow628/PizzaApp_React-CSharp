@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
-const BASE_URL = 'http://localhost:5021'
+const BASE_URL = import.meta.env.VITE_API_URL
 
 export function useFetch(path, options = {}) {
   const { token, headers: optHeaders, ...restOptions } = options
